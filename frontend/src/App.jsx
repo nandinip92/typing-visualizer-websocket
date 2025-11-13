@@ -3,8 +3,8 @@ import "./App.css";
 
 /**
  * Real-time Typing Visualizer Demo
- * - Left: HTTP (manual send)
- * - Right: WebSocket (live, backend-processed, visually appealing)
+ * HTTP (manual send)
+ * WebSocket (live, backend-processed, visually appealing)
  */
 export default function App() {
   const [typedText, setTypedText] = useState("");
