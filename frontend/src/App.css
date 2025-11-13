@@ -1,145 +1,171 @@
-/* Body & Background */
-body {
+/* ----------------------------- */
+/* General Reset */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body Background */
+body {
   background: linear-gradient(to right, #e6f0fa, #d9e2ec);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  padding: 2rem 1rem;
 }
 
-/* Container */
+/* Main Container */
 .container {
-  text-align: center;
-  padding: 30px 20px;
-  max-width: 900px;
   width: 100%;
+  max-width: 1000px;
 }
 
-/* Title */
+/* Heading */
 h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1e2022;
-  text-shadow: 1px 1px 2px #aaa;
-  margin-bottom: 30px;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #333;
 }
 
 /* Input Box */
 .input-box {
-  width: 80%;
-  max-width: 500px;
-  padding: 12px;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  border: 2px solid #7ed6df;
-  background-color: #ffffff;
-  color: #1e2022;
-  margin-bottom: 30px;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 2rem;
   outline: none;
 }
 
 .input-box:focus {
-  border-color: #1e90ff;
-  box-shadow: 0 0 10px #1e90ff66;
+  border-color: #6c63ff;
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
 }
 
-/* Panels Wrapper */
+/* Panels Layout */
 .panels {
   display: flex;
-  justify-content: center;
-  gap: 30px;
   flex-wrap: wrap;
-  align-items: stretch; /* Ensures all panels same height */
+  gap: 2rem;
+  justify-content: center;
 }
 
-/* Individual Panel */
+/* Panel Styling */
 .panel {
-  flex: 1 1 250px;
-  min-width: 250px;
-  padding: 20px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  flex: 1 1 400px;
+  min-height: 200px;
+  transition: transform 0.2s;
 }
 
-/* Buttons */
+.panel:hover {
+  transform: translateY(-5px);
+}
+
+/* Panel Heading */
+.panel h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #444;
+  text-align: center;
+}
+
+/* HTTP Button */
 .btn {
-  padding: 10px 20px;
+  background-color: #6c63ff;
+  color: #fff;
   border: none;
+  padding: 0.6rem 1rem;
   border-radius: 8px;
-  background-color: #ff6b6b;
-  color: white;
   cursor: pointer;
-  margin-bottom: 10px;
-  font-size: 1rem;
-  transition: background 0.2s;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background-color: #ff4757;
+  background-color: #574fd6;
 }
 
-/* Output Boxes */
+/* Output Box General Styling */
 .output-box {
-  border-radius: 8px;
-  padding: 12px;
-  min-height: 100px;
-  width: 100%;
-  font-weight: bold;
-  font-size: 1.2rem;
-  word-wrap: break-word;
-  box-sizing: border-box;
+  flex-grow: 1;
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-y: auto;
+  font-size: 1.1rem;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 60px;
 }
 
+/* HTTP Output */
 .http-box {
-  border: 2px solid #ffa502;
-  color: #ff7f50;
-  background-color: #fff8f0;
+  font-weight: 600;
+  color: #ff4d4d;   /* bright red for HTTP messages */
+  background-color: #ffeaea; /* light red background */
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
 }
 
+/* WebSocket Output */
 .ws-box {
-  border: 2px solid #2ed573;
-  color: #2ed573;
-  background-color: #f0fff0;
+  color: #555;
+  font-size: 1.1rem;
+  min-height: 60px;
+  background-color: #f3f2ff; /* light purple background */
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
 }
 
-/* Responsive Breakpoints */
-@media (max-width: 768px) {
-  .input-box {
-    width: 95%;
-  }
+/* WebSocket Timestamp */
+.ws-box .ws-timestamp {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 0.2rem;
+}
 
+/* WebSocket Message */
+.ws-box .ws-message {
+  font-weight: 600;
+  color: #4a3fff;
+  word-break: break-word;
+  background-color: #e0dfff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 0.4rem;
+}
+
+/* Fallback text for empty WS box */
+.ws-box:empty::before {
+  content: "Waiting for live input...";
+  color: #999;
+  font-style: italic;
+  display: block;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
   .panels {
     flex-direction: column;
-    gap: 20px;
-    align-items: center;
+    gap: 1.5rem;
   }
 
   .panel {
-    width: 90%;
-    min-width: unset;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  .btn {
-    padding: 8px 16px;
-    font-size: 0.9rem;
-  }
-
-  .output-box {
-    font-size: 1rem;
-    min-height: 80px;
+    flex: 1 1 100%;
   }
 }
