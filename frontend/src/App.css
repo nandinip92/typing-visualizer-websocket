@@ -1,0 +1,145 @@
+/* Body & Background */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #e6f0fa, #d9e2ec);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Container */
+.container {
+  text-align: center;
+  padding: 30px 20px;
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Title */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e2022;
+  text-shadow: 1px 1px 2px #aaa;
+  margin-bottom: 30px;
+}
+
+/* Input Box */
+.input-box {
+  width: 80%;
+  max-width: 500px;
+  padding: 12px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  border: 2px solid #7ed6df;
+  background-color: #ffffff;
+  color: #1e2022;
+  margin-bottom: 30px;
+  outline: none;
+}
+
+.input-box:focus {
+  border-color: #1e90ff;
+  box-shadow: 0 0 10px #1e90ff66;
+}
+
+/* Panels Wrapper */
+.panels {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: stretch; /* Ensures all panels same height */
+}
+
+/* Individual Panel */
+.panel {
+  flex: 1 1 250px;
+  min-width: 250px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff6b6b;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background-color: #ff4757;
+}
+
+/* Output Boxes */
+.output-box {
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 100px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1.2rem;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+.http-box {
+  border: 2px solid #ffa502;
+  color: #ff7f50;
+  background-color: #fff8f0;
+}
+
+.ws-box {
+  border: 2px solid #2ed573;
+  color: #2ed573;
+  background-color: #f0fff0;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+  .input-box {
+    width: 95%;
+  }
+
+  .panels {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .panel {
+    width: 90%;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .output-box {
+    font-size: 1rem;
+    min-height: 80px;
+  }
+}
