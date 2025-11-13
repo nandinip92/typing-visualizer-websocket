@@ -3,45 +3,37 @@ import "./App.css";
 
 /**
  * Real-time Typing Visualizer Demo
- * - Left: HTTP "Send" updates message only on click.
- * - Right: WebSocket updates instantly as you type.
+ * HTTP (manual send)
+ * WebSocket (live, backend-processed, visually appealing)
  */
 export default function App() {
   const [typedText, setTypedText] = useState("");
-  const [liveText, setLiveText] = useState("");
+  const [liveText, setLiveText] = useState(null);
   const [httpText, setHttpText] = useState("");
-  const [wsStatus, setWsStatus] = useState("Connecting..."); // connection status
-  const ws = useRef(null); // persistent WebSocket
+  const ws = useRef(null);
 
   // Setup WebSocket connection
   useEffect(() => {
-    ws.current = new WebSocket("ws://127.0.0.1:8000/ws");
+    ws.current = new WebSocket("ws://localhost:8000/ws");
 
-    ws.current.onopen = () => {
-      console.log("✅ WebSocket Connected!");
-      setWsStatus("Connected ✅");
-    };
-
+    ws.current.onopen = () => console.log("✅ WebSocket Connected!");
     ws.current.onmessage = (event) => {
-      console.log("📩 Message received:", event.data);
-      setLiveText(event.data);
+      try {
+        const msg = JSON.parse(event.data); // parse JSON safely
+        setLiveText(msg);
+        console.log("📩 WebSocket Message:", msg);
+      } catch (err) {
+        console.error("Failed to parse WS JSON", err);
+      }
     };
 
-    ws.current.onerror = (err) => {
-      console.error("❌ WebSocket Error:", err);
-      setWsStatus("Error ❌");
-    };
+    ws.current.onerror = (err) => console.error("❌ WebSocket Error:", err);
+    ws.current.onclose = () => console.log("🔌 WebSocket Closed.");
 
-    ws.current.onclose = () => {
-      console.log("🔌 WebSocket Closed.");
-      setWsStatus("Closed 🔌");
-    };
-
-    // Cleanup on unmount
     return () => ws.current.close();
   }, []);
 
-  // Send WebSocket message as user types
+  // Send WebSocket message while typing
   const handleType = (e) => {
     const text = e.target.value;
     setTypedText(text);
@@ -53,16 +45,19 @@ export default function App() {
     }
   };
 
-  // Send message via HTTP manually
+  // Send HTTP message manually
   const sendHttp = async () => {
-    await fetch("http://127.0.0.1:8000/message", {
+    const timestamp = new Date().toLocaleTimeString(); // capture current time
+    await fetch("http://localhost:8000/message", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: typedText }),
     });
-    const res = await fetch("http://127.0.0.1:8000/message");
+    const res = await fetch("http://localhost:8000/message");
     const data = await res.json();
-    setHttpText(data.text);
+
+    // store text and timestamp together
+    setHttpText({ text: data.text, timestamp });
   };
 
   return (
@@ -74,6 +69,7 @@ export default function App() {
         placeholder="Start typing..."
         className="input-box"
       />
+
       <div className="panels">
         {/* HTTP Panel */}
         <div className="panel">
@@ -81,13 +77,31 @@ export default function App() {
           <button className="btn" onClick={sendHttp}>
             Send via HTTP
           </button>
-          <div className="output-box http-box">{httpText}</div>
+          <div className="output-box http-box">
+            {httpText ? (
+              <>
+                <span className="http-timestamp">⏱ {httpText.timestamp}</span>
+                <span className="http-message">{httpText.text}</span>
+              </>
+            ) : (
+              "Waiting for manual send..."
+            )}
+          </div>
         </div>
 
         {/* WebSocket Panel */}
         <div className="panel">
-          <h2>⚡ WebSocket (live) — {wsStatus}</h2>
-          <div className="output-box ws-box">{liveText}</div>
+          <h2>⚡ WebSocket (live)</h2>
+          <div className="output-box ws-box">
+            {liveText ? (
+              <>
+                <span className="ws-timestamp">⏱ {liveText.timestamp}</span>
+                <span className="ws-message">{liveText.transformed}</span>
+              </>
+            ) : (
+              "Waiting for live input..."
+            )}
+          </div>
         </div>
       </div>
     </div>

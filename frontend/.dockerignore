@@ -1,0 +1,21 @@
+# Node modules (we install in Docker)
+node_modules/
+
+# Build output (we rebuild in Docker)
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Git
+.git
+.gitignore
+
+# Environment
+.env

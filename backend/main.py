@@ -3,6 +3,7 @@ FastAPI backend for Real-time Typing Visualizer Demo.
 Demonstrates HTTP vs WebSocket communication.
 """
 
+import datetime
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -67,13 +68,33 @@ def ws_info():
 async def websocket_endpoint(websocket: WebSocket):
     """
     WebSocket endpoint for live two-way communication.
-    Receives text from client and immediately sends it back.
+
+    Receives text from client, processes it, and sends back as JSON:
+    - timestamp
+    - original text
+    - transformed text (reversed)
+    - emojis for visual impact
     """
     await websocket.accept()
     try:
         while True:
+            # Receive text from frontend
             data = await websocket.receive_text()
             latest_message["text"] = data
-            await websocket.send_text(data)
+
+            # Backend processing
+            timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+            transformed = data[::-1]  # simple transformation
+            response = {
+                "timestamp": timestamp,
+                "original": data,
+                "transformed": f"⚡ {transformed} 🔄"
+            }
+
+            # Log to console for demo proof
+            print(f"🖥️ [Backend Received @ {timestamp}]: {data}")
+
+            # Send processed message as proper JSON
+            await websocket.send_json(response)
     except Exception:
         print("Client disconnected...")
