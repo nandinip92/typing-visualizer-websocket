@@ -47,6 +47,7 @@ export default function App() {
 
   // Send HTTP message manually
   const sendHttp = async () => {
+    const timestamp = new Date().toLocaleTimeString(); // capture current time
     await fetch("http://localhost:8000/message", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -54,7 +55,9 @@ export default function App() {
     });
     const res = await fetch("http://localhost:8000/message");
     const data = await res.json();
-    setHttpText(data.text);
+
+    // store text and timestamp together
+    setHttpText({ text: data.text, timestamp });
   };
 
   return (
@@ -71,8 +74,19 @@ export default function App() {
         {/* HTTP Panel */}
         <div className="panel">
           <h2>📡 HTTP (manual)</h2>
-          <button className="btn" onClick={sendHttp}>Send via HTTP</button>
-          <div className="output-box http-box">{httpText}</div>
+          <button className="btn" onClick={sendHttp}>
+            Send via HTTP
+          </button>
+          <div className="output-box http-box">
+            {httpText ? (
+              <>
+                <span className="http-timestamp">⏱ {httpText.timestamp}</span>
+                <span className="http-message">{httpText.text}</span>
+              </>
+            ) : (
+              "Waiting for manual send..."
+            )}
+          </div>
         </div>
 
         {/* WebSocket Panel */}

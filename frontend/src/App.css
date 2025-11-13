@@ -113,12 +113,47 @@ h1 {
 
 /* HTTP Output */
 .http-box {
-  font-weight: 600;
-  color: #ff4d4d;   /* bright red for HTTP messages */
-  background-color: #ffeaea; /* light red background */
+  color: #555;
+  font-size: 1.1rem;
+  min-height: 60px;
+  background-color: #fdf6f0; /* soft peach background */
   padding: 0.8rem 1rem;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  overflow-y: auto;
 }
+
+/* HTTP Timestamp */
+.http-box .http-timestamp {
+  font-size: 0.8rem;
+  color: #a65c4f; /* soft brownish-red for timestamp */
+  font-style: italic;
+  margin-bottom: 0.2rem;
+}
+
+/* HTTP Message */
+.http-box .http-message {
+  font-weight: 600;
+  color: #b85c3b; /* warmer, soft orange/brown for text */
+  word-break: break-word;
+  background-color: #ffe6d9; /* light peach bubble for message */
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 0.4rem;
+}
+
+/* Fallback text for empty HTTP box */
+.http-box:empty::before {
+  content: "Waiting for manual send...";
+  color: #999;
+  font-style: italic;
+  display: block;
+}
+
+
 
 /* WebSocket Output */
 .ws-box {
