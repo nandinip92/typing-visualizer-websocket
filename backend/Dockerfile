@@ -1,6 +1,9 @@
 # Use official Python image
 FROM python:3.11-slim
 
+# Force unbuffered Python output
+ENV PYTHONUNBUFFERED=1
+
 # Set working directory
 WORKDIR /app
 
@@ -17,5 +20,4 @@ COPY . .
 EXPOSE 8000
 
 # Start the server
-# python -m  uvicorn main:app --reload --host 0.0.0.0 --port 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
