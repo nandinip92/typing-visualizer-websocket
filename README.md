@@ -34,10 +34,10 @@ With WebSockets, once connected, the **server can send updates anytime** without
 
 ### Simple Example
 
-Think of a “doorbell” analogy:
+- **HTTP**: Like asking the teacher repeatedly if your test results are ready 📝
 
-- **HTTP**: You keep knocking on the door again and again to check if the pizza arrived 🍕.
-- **WebSockets**: You ring once, and the delivery person can ring **your bell anytime** when pizza is ready 🔔.
+- **WebSockets**: Like the teacher shouting your score immediately when it’s ready 📣
+
 
 ### Key Features of WebSockets
 
